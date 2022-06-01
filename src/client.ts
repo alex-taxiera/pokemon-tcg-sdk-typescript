@@ -1,5 +1,6 @@
-import * as axios from 'axios';
+import fetch from 'node-fetch'
 import { Parameter } from './interfaces/parameter';
+import { Response } from './interfaces/response';
 
 export class Client {
     private readonly POKEMONTCG_API_BASE_URL: string =
@@ -21,7 +22,7 @@ export class Client {
         return Client.instance;
     }
 
-    async get<T>(resource: string, params?: Parameter | string): Promise<T> {
+    async get<T>(resource: string, params?: Parameter): Promise<Response<T>> {
         let url = `${this.POKEMONTCG_API_URL}/${resource}`;
         const headers = {
             'Content-Type': 'application/json',
@@ -31,22 +32,21 @@ export class Client {
             headers['X-Api-Key'] = this.POKEMONTCG_API_KEY;
         }
 
-        const config: axios.AxiosRequestConfig = {
-            headers,
-        };
-
-        if (typeof params === 'string') {
-            url += `/${params}`;
-        } else if (params) {
+        if (params) {
             url += `?${this.stringify(params)}`;
         }
 
-        return axios.default
-            .get<T>(url, config)
-            .then((response) => {
-                return response.data[Object.keys(response.data)[0]];
+        return fetch(url, { headers })
+            .then(async res => {
+                if (res.status < 200 || res.status >= 300) {
+                    console.log(await res.text())
+                    console.log(headers)
+                    throw new Error(`${res.status}: ${res.statusText}`);
+                }
+
+                return res
             })
-            .catch((error) => Promise.reject(error));
+            .then(res => res.json())
     }
 
     private stringify(params: Parameter): string {

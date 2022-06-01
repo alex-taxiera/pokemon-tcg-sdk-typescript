@@ -8,6 +8,7 @@ export * from './interfaces/set';
 export * from './interfaces/image';
 export * from './interfaces/tcgplayer';
 export * from './interfaces/legality';
+export * from './interfaces/response';
 
 // Enums
 export * from './enums/type';

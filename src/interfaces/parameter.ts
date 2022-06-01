@@ -3,4 +3,5 @@ export interface Parameter {
     orderBy?: string;
     page?: number;
     pageSize?: number;
+    select?: string;
 }

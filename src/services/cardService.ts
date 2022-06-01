@@ -5,62 +5,57 @@ import { Supertype } from '../enums/supertype';
 import { Subtype } from '../enums/subtype';
 import { Rarity } from '../enums/rarity';
 import { Client } from '../client';
+import { Response } from '../interfaces/response';
 
 async function paginateAllCards(pageNumber: number, params?: Parameter): Promise<Card[]> {
     let currentPage = pageNumber;
     const client: Client = Client.getInstance();
-    const response: Card[] = await client.get<Card[]>('cards', { pageSize: 250, page: currentPage, ...params });
+    const response = await client.get<Card[]>('cards', { pageSize: 250, page: currentPage++, ...params });
+    const cards = response.data;
 
-    if (response.length === 0) {
-        return response;
+    if (response.totalCount <= cards.length) {
+        return cards;
     } else {
-        currentPage++;
-        return response.concat(await paginateAllCards(currentPage));
+        return cards.concat(await paginateAllCards(currentPage));
     }
 }
 
 export async function getAllCards(params?: Parameter): Promise<Card[]> {
     const startingPage = 1;
-    const response: Card[] = await paginateAllCards(startingPage, params);
+    const response = await paginateAllCards(startingPage, params);
     return response;
 }
 
-export async function findCardByID(id: string): Promise<Card> {
+export async function findCardByID(id: string): Promise<Response<Card>>{
     const client: Client = Client.getInstance();
-    const response: Card = await client.get<Card>('cards', id);
-    return response;
+    return await client.get<Card>(`cards/${id}`);
 }
 
-export async function findCardsByQueries(params: Parameter): Promise<Card[]> {
+export async function findCardsByQueries(params: Parameter): Promise<Response<Card[]>> {
     const client: Client = Client.getInstance();
-    const response: Card[] = await client.get<Card[]>('cards', params);
-    return response;
+    return await client.get<Card[]>('cards', params);
 }
 
-export async function getTypes(): Promise<Type[]> {
+export async function getTypes(): Promise<Response<Type[]>> {
     const client: Client = Client.getInstance();
 
-    const response: Type[] = await client.get<Type[]>('types');
-    return response;
+    return await client.get<Type[]>('types');
 }
 
-export async function getSupertypes(): Promise<Supertype[]> {
+export async function getSupertypes(): Promise<Response<Supertype[]>> {
     const client: Client = Client.getInstance();
 
-    const response: Supertype[] = await client.get<Supertype[]>('supertypes');
-    return response;
+    return await client.get<Supertype[]>('supertypes');
 }
 
-export async function getSubtypes(): Promise<Subtype[]> {
+export async function getSubtypes(): Promise<Response<Subtype[]>> {
     const client: Client = Client.getInstance();
 
-    const response: Subtype[] = await client.get<Subtype[]>('subtypes');
-    return response;
+    return await client.get<Subtype[]>('subtypes');
 }
 
-export async function getRarities(): Promise<Rarity[]> {
+export async function getRarities(): Promise<Response<Rarity[]>> {
     const client: Client = Client.getInstance();
 
-    const response: Rarity[] = await client.get<Rarity[]>('rarities');
-    return response;
+    return await client.get<Rarity[]>('rarities');
 }

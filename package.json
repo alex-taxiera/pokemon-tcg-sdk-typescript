@@ -1,6 +1,6 @@
 {
-  "name": "pokemon-tcg-sdk-typescript",
-  "version": "2.1.0-beta.1",
+  "name": "@alex-taxiera/pokemon-tcg-sdk-typescript",
+  "version": "0.0.1",
   "description": "Typescript SDK for the PokemonTCG API (https://pokemontcg.io)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,10 +30,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "axios": "0.21.1"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/jest": "26.0.20",
+    "@types/node": "^17.0.36",
+    "@types/node-fetch": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "4.17.0",
     "@typescript-eslint/parser": "4.17.0",
     "eslint": "7.22.0",

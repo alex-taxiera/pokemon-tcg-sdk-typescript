@@ -1,8 +1,10 @@
 export enum Rarity {
     AmazingRare = 'Amazing Rare',
+    ClassicCollection = 'Classic Collection',
     Common = 'Common',
     Legend = 'LEGEND',
     Promo = 'Promo',
+    RadiantRare = 'Radiant Rare',
     Rare = 'Rare',
     RareAce = 'Rare ACE',
     RareBreak = 'Rare BREAK',
@@ -13,6 +15,7 @@ export enum Rarity {
     RareHoloStar = 'Rare Holo Star',
     RareHoloV = 'Rare Holo V',
     RareHoloVMAX = 'Rare Holo VMAX',
+    RareHoloVSTAR = 'Rare Holo VSTAR',
     RarePrime = 'Rare Prime',
     RarePrimeStar = 'Rare Prism Star',
     RareRainbow = 'Rare Rainbow',
@@ -22,4 +25,6 @@ export enum Rarity {
     RareShinyGX = 'Rare Shiny GX',
     RareUltra = 'Rare Ultra',
     Uncommon = 'Uncommon',
+    V = 'V',
+    VM = 'VM',
 }
