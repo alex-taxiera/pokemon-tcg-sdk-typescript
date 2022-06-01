@@ -39,8 +39,6 @@ export class Client {
         return fetch(url, { headers })
             .then(async res => {
                 if (res.status < 200 || res.status >= 300) {
-                    console.log(await res.text())
-                    console.log(headers)
                     throw new Error(`${res.status}: ${res.statusText}`);
                 }
 
