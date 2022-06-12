@@ -26,7 +26,7 @@ export async function getAllCards(params?: Parameter): Promise<Card[]> {
     return response;
 }
 
-export async function findCardByID(id: string, params: Pick<Parameter, 'select'>): Promise<Response<Card>>{
+export async function findCardByID(id: string, params?: Pick<Parameter, 'select'>): Promise<Response<Card>>{
     const client: Client = Client.getInstance();
     return await client.get<Card>(`cards/${id}`, params);
 }
